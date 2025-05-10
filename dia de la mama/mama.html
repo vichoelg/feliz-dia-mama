@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Día de las Madres</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right bottom, #ffcad4, #f3b0c3);
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .card-container {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+        }
+        
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card-front {
+            background-color: #fff;
+            color: #e84a5f;
+        }
+        
+        .card-back {
+            background-color: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+        
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #e84a5f;
+        }
+        
+        .click-hint {
+            margin-top: 15px;
+            color: #e84a5f;
+            animation: bounce 1s infinite;
+            text-align: center;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .heart {
+            margin: 20px 0;
+            position: relative;
+            width: 100px;
+            height: 90px;
+            animation: pulse 1.5s ease infinite;
+        }
+        
+        .heart:before, .heart:after {
+            position: absolute;
+            content: "";
+            left: 50px;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            background: #e84a5f;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .message {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .signature {
+            font-style: italic;
+            color: #e84a5f;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        
+        .roses {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            position: absolute;
+            bottom: 10px;
+        }
+        
+        .rose {
+            font-size: 24px;
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes sway {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+        
+        .flower {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: -1;
+            animation: falling linear infinite;
+        }
+        
+        @keyframes falling {
+            0% {
+                opacity: 1;
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0.3;
+                top: 110%;
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card" id="card">
+            <div class="card-front">
+                <h1 class="title">Feliz Día de las Madres</h1>
+                <div class="heart"></div>
+                <p class="click-hint">Haz clic para abrir</p>
+            </div>
+            <div class="card-back">
+                <h2 class="title">Para la mejor mamá del mundo</h2>
+                <div class="message">
+                    <p>Querida Mamá,</p>
+                    <br>
+                    <p>En este día tan especial, quiero agradecerte por todo tu amor incondicional, tu paciencia infinita y tus sacrificios diarios.</p>
+                    <br>
+                    <p>Eres mi inspiración, mi fuerza y mi guía. Gracias por siempre estar ahí para mí con amor vicente</p>
+                </div>
+                <p class="signature">todo mi amor para mc</p>
+                <div class="roses">
+                    <span class="rose">🌹</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose">🌹</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Card flip functionality
+        document.getElementById('card').addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+        
+        // Create falling flowers
+        function createFlowers() {
+            const flowerTypes = ['🌸', '🌷', '🌼', '🌺', '💐'];
+            const bodyElem = document.body;
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.classList.add('flower');
+                    flower.textContent = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+                    
+                    // Random position
+                    flower.style.left = Math.random() * 100 + 'vw';
+                    
+                    // Random speed
+                    const duration = Math.random() * 10 + 5;
+                    flower.style.animationDuration = duration + 's';
+                    
+                    // Random delay
+                    flower.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    bodyElem.appendChild(flower);
+                    
+                    // Remove the flower after animation to prevent memory issues
+                    setTimeout(() => {
+                        flower.remove();
+                    }, (duration + 5) * 1000);
+                }, i * 300);
+            }
+        }
+        
+        // Run on page load and then every 10 seconds
+        window.addEventListener('load', function() {
+            createFlowers();
+            setInterval(createFlowers, 10000);
+        });
+    </script>
+</body>
+</html>
